@@ -1,0 +1,24 @@
+#!/bin/bash
+
+CONFIG=$HOME/.local/scripts/vendor/YOUR-OPENVPN-CONFIG.ovpn
+
+pw='YOUR ADMIN PASSWORD'
+
+yad --title="VPN" --width=400 --height=100  --question --text \
+    "Te conectaras a una VPN\n¿Continuar?";
+
+if [ $? -ne 1 ]; then
+    sudo -S <<< $pw -v
+    if sudo -n true 2>/dev/null; then
+        txt="Contraseña correcta\nConectandoce a la VPN"
+        sudo  openvpn --config $CONFIG 2>&1 | \
+            yad  --title="VPN" \
+            --text="$txt\nPuede cerrar esta ventana si quiere" \
+            --width=1000 --height=600 --text-info > /dev/null
+    else
+        yad --title="VPN" --text="Contraseña incorrecta"
+        exit 1
+    fi
+else
+    yad --title="VPN" --width=400 --text="Pos no y ya..."
+fi
