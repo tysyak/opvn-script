@@ -21,7 +21,8 @@ se guardo dentro de `$HOME/.local/scripts`, donde `scripts/` es un
 directorio creado(Se recomienda poner la ruta anterior en la variable
 `$PATH`) 
 
-En `ConnectVPN` cambiar el valor `$pass` por su cuenta de administrador
+En `ConnectVPN` cambiar el valor `$pass` por su contraseña de cuenta de 
+administrador (usted debe de serlo)
 (también en `DisconnectVPN`) y la variable $CONFIG con la ruta de 
 su configuración *.opvn como ruta absoluta para evitar futuros conflictos
 `vendor/YOUR-OPENVPN-CONFIG.opvn`
