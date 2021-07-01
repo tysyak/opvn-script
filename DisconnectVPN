@@ -1,0 +1,27 @@
+#!/bin/bash
+
+pw='YOUR ADMIN PASSWORD'
+
+yad --title="VPN " --width=400 --height=100  --question --text \
+    "¿Quieres Desconectarte de la red privada?";
+
+if [ $? -ne 1 ]; then
+    if [ -z "$(pidof openvpn)" ]; then
+        yad --title="Desconectar de la VPN" \
+            --text="No se encuentra conectado a una VPN";
+    else
+        sudo -S  <<< $pw -v
+        if sudo -n true 2>/dev/null; then
+            sudo pkill openvpn > /dev/null;
+            yad yad --title="VPN " --width=400 \
+                --text="Contraseña correcta desconectado de la VPN...";
+        else
+            yad yad --title="VPN " --width=400 \
+                --text="Contraseña incorrecta"
+            exit 1
+        fi
+    fi
+else
+    yad --title="VPN " --width=400 \
+        --text="Ok, sigues conectado..."
+fi
